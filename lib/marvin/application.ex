@@ -7,7 +7,12 @@ defmodule Marvin.Application do
 
   @impl true
   def start(_type, _args) do
+    config = Vapor.load!(Marvin.Config)
+
+    IO.inspect(config)
+
     children = [
+      {Telegram.Bot.ChatBot.Supervisor, {Marvin.Bot, config.telegram.token, []}}
       # Starts a worker by calling: Marvin.Worker.start_link(arg)
       # {Marvin.Worker, arg}
     ]
